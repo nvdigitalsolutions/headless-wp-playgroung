@@ -1,0 +1,50 @@
+version: '3.9'
+
+services:
+  db:
+    image: mariadb:10.11
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - db_data:/var/lib/mysql
+
+  wordpress:
+    image: wordpress:${WP_VERSION}-php8.3-apache
+    restart: unless-stopped
+    depends_on: [db]
+    ports:
+      - "8888:80"
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_NAME: ${MYSQL_DATABASE}
+      WORDPRESS_DB_USER: ${MYSQL_USER}
+      WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
+      WORDPRESS_TABLE_PREFIX: ${WORDPRESS_TABLE_PREFIX}
+    volumes:
+      - ./plugins:/var/www/html/wp-content/plugins
+      - wp_data:/var/www/html
+
+  wpcli:
+    image: wordpress:cli-php8.3
+    depends_on: [wordpress]
+    profiles: ["tools"]
+    volumes:
+      - ./plugins:/var/www/html/wp-content/plugins
+      - wp_data:/var/www/html
+    entrypoint: wp
+
+  # Uncomment if you want a front-end container
+  # frontend:
+  #   image: node:20-alpine
+  #   working_dir: /app
+  #   volumes:
+  #     - ./frontend:/app
+  #   command: sh -c "npm install && npm run dev"
+
+volumes:
+  db_data:
+  wp_data:
