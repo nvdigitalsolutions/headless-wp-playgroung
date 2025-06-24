@@ -7,13 +7,16 @@ A portable, containerised environment for developing and testing WordPress/WooCo
 - **docker-compose.yml** – spins up MariaDB + WordPress/PHP‑Apache + WP‑CLI.
 - **scripts/bootstrap.sh** – one‑click site installer (core + WooCommerce + WPGraphQL).
 - **.github/workflows/ci.yml** – GitHub Actions CI that mirrors the stack in the cloud.
-- **.env** – tweak credentials, site URL & component versions.
+- **.env.example** – sample environment variables. Copy to `.env` and tweak credentials, site URL & component versions.
 - **plugins/** – mount your plugin code here (hot‑reloaded inside the container).
 
 ## Quick start
 
 ```bash
-install WP
+# create your environment file
+cp .env.example .env
+
+# start the containers and install WordPress
 ./scripts/bootstrap.sh
 ```
 
