@@ -15,10 +15,13 @@ A portable, containerised environment for developing and testing WordPress/WooCo
 ```bash
 # create your environment file
 cp .env.example .env
+# (optional) edit `.env` to customise credentials and URLs
 
 # start the containers and install WordPress
 ./scripts/bootstrap.sh
 ```
+
+The bootstrap script automatically loads variables from `.env`.
 
 Once the script finishes, visit **http://localhost:8888/wp-admin** and log in with the admin credentials from `.env`.
 
