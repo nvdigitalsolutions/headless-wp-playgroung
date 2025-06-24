@@ -13,12 +13,7 @@ A portable, containerised environment for developing and testing WordPress/WooCo
 ## Quick start
 
 ```bash
-# 1. Clone & move in
-unzip headless-wp-playground.zip && cd headless-wp-playground
-
-# 2. (Optional) customise .env
-
-# 3. Bring everything online & install WP
+install WP
 ./scripts/bootstrap.sh
 ```
 
